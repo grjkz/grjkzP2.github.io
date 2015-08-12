@@ -3,7 +3,7 @@
 ## User Stories
 This app will take a user input and post it into a db for others to read. A forum.
 The input fields will be: Alias, Body/Content
-Extra fields will be timestamps
+Extra fields in db will be timestamps.
 
 ## Front-end Wireframes
 Foundation will be used since I'm familiar with it.
@@ -21,12 +21,17 @@ Users can create posts within the thread page.
 Displaying the posts should be in order of ID so there shouldn't be much problem in ordering the posts.
 
 ## Routes
-/		landing page to welcome users and a link to /threads
-/threads	displays all the folders/threads
-/threads/new	form to create a new thread
-/threads/:id	renders all posts with associated thread ID
-/threads/:id/new	form to create a new post in thread:id
-
+Route | Method | EJS | dbTable Used | Purpose
+/	| GET | index.ejs | posts, threads | landing page to welcome users 
+/board | GET | board.ejs | threads, posts | displays all the folders/threads
+/board/:genre | GET | showThreads.ejs | posts, threads(for topic name) | renders all threads with associated genre
+/board/:genre/new | GET | newThread.ejs | none	| form to create a new thread
+/board/:genre | POST | board.ejs | threads, posts | create new thread + redirects
+/board/:genre/:thread_id | GET | showPosts.ejs | posts, threads | renders all posts in associated thread
+/board/:genre/:thread_id/post | GET | newPost.ejs | none | gen. form to create a new post in thread:id
+/board/:genre/:thread_id | POST | posts.ejs | posts, threads | save new post + redirect
+/board/:genre/:thread_id/:post_id/edit | PUT | editPost.ejs | posts | edit post
+/board/:genre/:thread_id | PUT | posts.ejs | posts, threads | overwrite db + redirect
 
 ## Database Design
 The database will be the biggest problem.
