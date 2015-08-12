@@ -31,9 +31,18 @@ Route | Method | EJS | dbTable Used | Purpose
 /board/:genre | POST | board.ejs | threads, posts | create new thread + redirects
 /board/:genre/:thread_id | GET | showPosts.ejs | posts, threads | renders all posts in associated thread
 /board/:genre/:thread_id/post | GET | newPost.ejs | none | gen. form to create a new post in thread:id
-/board/:genre/:thread_id | POST | posts.ejs | posts, threads | save new post + redirect
-/board/:genre/:thread_id/:post_id/edit | PUT | editPost.ejs | posts | edit post
-/board/:genre/:thread_id | PUT | posts.ejs | posts, threads | overwrite db + redirect
+/board/:genre/:thread_id | POST | posts.ejs | posts, threads | save new thread + redirect
+/board/:genre/:thread_id | DELETE | none | posts, threads | delete thread and associated posts
+/board/:genre/:thread_id/:post_id/edit | GET | editPost.ejs | posts | form for editing post
+/board/:genre/:thread_id | PUT | posts.ejs | posts, threads | overwrite db with new post + redirect
+/board/:genre/:thread_id/:post_id | DELETE | none | posts,threads | delete post + refresh
+/board/:genre/:thread_id | POST | posts.ejs | posts, threads | liking OP + refresh page
+/polls | GET | showPolls.ejs | polls | render list of polls
+/polls/new | GET | newPoll.ejs | none | form to create a new poll
+/polls/:poll_id | GET | pollDetails.ejs | polls, polloptions | render a poll's question and its options
+polls/:poll_id/edit | GET | editPoll.ejs | polloptions | render edit page for poll_id
+/polls/:poll_id | PUT | pollDetails.ejs | polls, polloptions | edit poll_id db and redirect
+/polls/:poll_id | DELETE | none | polls, polloptions | delete poll and its options + redirect
 
 ### Database Design
 The database will be the biggest problem.
