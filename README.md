@@ -22,6 +22,7 @@ Displaying the posts should be in order of ID so there shouldn't be much problem
 
 ## Routes
 Route | Method | EJS | dbTable Used | Purpose
+------|--------|-----|--------------|---------
 /	| GET | index.ejs | posts, threads | landing page to welcome users 
 /board | GET | board.ejs | threads, posts | displays all the folders/threads
 /board/:genre | GET | showThreads.ejs | posts, threads(for topic name) | renders all threads with associated genre
