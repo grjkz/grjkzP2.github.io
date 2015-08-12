@@ -1,14 +1,15 @@
-##### Project 2 - Forum
+# Project 2 - Forum
 
-## User Stories
+### User Stories
 This app will take a user input and post it into a db for others to read. A forum.
+
 The input fields will be: Alias, Body/Content
 Extra fields in db will be timestamps.
 
-## Front-end Wireframes
+### Front-end Wireframes
 Foundation will be used since I'm familiar with it.
 
-## Pseudocode
+### Pseudocode
 Start with the basic skeleton for the forum.
 Display all the available threads on a page by iterating through the db.
 When user clicks on a thread, take the id of that thread and populate the page with all posts of that thread_id.
@@ -20,7 +21,7 @@ Users can create posts within the thread page.
 
 Displaying the posts should be in order of ID so there shouldn't be much problem in ordering the posts.
 
-## Routes
+### Routes
 Route | Method | EJS | dbTable Used | Purpose
 ------|--------|-----|--------------|---------
 /	| GET | index.ejs | posts, threads | landing page to welcome users 
@@ -34,5 +35,5 @@ Route | Method | EJS | dbTable Used | Purpose
 /board/:genre/:thread_id/:post_id/edit | PUT | editPost.ejs | posts | edit post
 /board/:genre/:thread_id | PUT | posts.ejs | posts, threads | overwrite db + redirect
 
-## Database Design
+### Database Design
 The database will be the biggest problem.
