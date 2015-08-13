@@ -1,0 +1,28 @@
+ * {
+ 	color:green;
+ 	border: solid black 1px;
+ }
+
+ ul {
+ 	display:inline;
+ 	list-style-type:none;
+ }
+ li {
+ 	display:inline;
+ 	margin: 20px 30px;
+ }
+
+ .header-container {
+ 	text-align: center;
+ 	background-color: orange;
+ 	padding: 2%;
+ 	margin-bottom: 20px;
+ }
+
+ footer {
+ 	text-align: center;
+ 	width: 100%;
+ 	position: absolute;
+ 	bottom: 0;
+
+ }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Board</title>
+	<% include partials/head %>
+</head>
+<body>
+	<% include partials/header %>
+
+	<div class="row">
+		<div class="small-10 medium-9 columns">
+			<div class="row">
+				<div class="small-1 columns">Likes</div>
+				<div class="small-8 columns">Topic</div>
+				<div class="small-2 columns">Updated</div>
+				<div class="small-1 column">Posts</div>
+			</div>
+				
+				<% genres.forEach(function(genre) { %>
+			<div class="row">
+				<div class="small-1 columns"><%=genre.id%></div>
+				<div class="small-8 columns">
+					<div class="row">
+					<a href="/boards/<%=genre.folder_name%>"><%=genre.folder_name%></a>
+					</div>
+					<div class="row">
+						Description
+					</div>
+				</div>
+				<div class="small-2 columns"></div>
+				<div class="small-1 column">99999</div>
+			</div>
+				<% }) %>
+
+		</div>
+		<div class="small-2 medium-3 columns">
+			<div class="row">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla asperiores sed debitis soluta voluptate deleniti, illo optio tempora quaerat possimus ipsam, earum ad vel blanditiis exercitationem facere accusantium et, consequuntur.
+			</div>
+		</div>
+	</div>
+
+	<% include partials/footer %>
+</body>
+</html>

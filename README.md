@@ -25,7 +25,7 @@ Displaying the posts should be in order of ID so there shouldn't be much problem
 Route | Method | EJS | dbTable Used | Purpose
 ------|--------|-----|--------------|---------
 /	| GET | index.ejs | posts, threads | landing page to welcome users 
-/board | GET | board.ejs | threads, posts | displays all the folders/threads
+/board | GET | showTop.ejs | threads, posts | displays all the folders/threads
 /board/:genre | GET | showThreads.ejs | posts, threads(for topic name) | renders all threads with associated genre
 /board/:genre/new | GET | newThread.ejs | none	| form to create a new thread
 /board/:genre | POST | board.ejs | threads, posts | create new thread + redirects

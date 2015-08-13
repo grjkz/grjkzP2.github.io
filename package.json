@@ -1,0 +1,26 @@
+{
+  "name": "project2",
+  "version": "1.0.0",
+  "description": "### User Stories This app will take a user input and post it into a db for others to read. A forum.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grjkz/grjkzP2.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grjkz/grjkzP2.github.io/issues"
+  },
+  "homepage": "https://github.com/grjkz/grjkzP2.github.io#readme",
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "ejs": "^2.3.3",
+    "express": "^4.13.3",
+    "method-override": "^2.3.5",
+    "sqlite3": "^3.0.10"
+  }
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>New Thread</title>
+	<% include partials/head %>
+</head>
+<body>
+	<% include partials/header %>
+
+	<form action="/boards/<%=path%>" method="POST">
+		<div class="row">
+			<div class="row">
+				<label for="topic-input">Topic:</label>
+			</div>
+			<div class="row">
+				<input type="text" placeholder='Topic' name='topic' id='topic-input'>
+			</div>
+		</div>
+		<div class="row">
+			<div class="row">
+				<label for="detail-input">Comment:</label>
+			</div>
+			<div class="row">
+				<textarea name="detail" id="detail-input" cols="30" rows="10"></textarea>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="small-6 medium-9 columns">
+				<form action="/boards/<%=path%>" method='GET'>
+					<button type='button' action='/boards/<%=path%>'>Back</button>
+				</form>
+			</div>
+			<div class="small-6 medium-3 columns end">
+				<button>Create Thread</button>
+			</div>
+		</div>
+	</form>
+
+	<% include partials/footer %>
+</body>
+</html>
