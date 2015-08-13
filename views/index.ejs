@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Index</title>
+	<% include partials/head %>
+</head>
+<body>
+	<% include partials/header %>
+
+	<div class="container">
+	
+		<div class="row">
+			<div class="small-12 columns">
+				<h1>Welcome to Gamerz</h1>
+			</div>
+		</div>
+	
+
+		<div class="row"> <!-- container for recent posts -->
+			
+			<div class="small-12 columns">
+				<div class="row"> <!-- container for header -->
+					<h3>Recent Comments</h3>
+				</div>
+
+			</div>
+			<div class="small-12 columns">
+				<% for (var i=0;i<5;i++) { %>
+				<div class="row">
+					<div class="small-12 columns">
+						<div class="row">
+							<p><%=recents[i].comment%></p>	
+						</div>
+					<div class="small-12 columns"> <!-- having consecutive columns creates tabbing -->
+						<div class="row">
+							<p>/<%=recents[i].topic%>/</p>	
+						</div>
+					</div>
+					</div>
+				</div>
+				<% } %>
+			</div>
+		
+		</div>
+		
+
+
+
+
+
+	</div>
+
+	<% include partials/footer %>
+</body>
+</html>

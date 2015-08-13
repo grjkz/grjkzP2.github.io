@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title><%=route%></title>
+	<title><%=path%></title>
 	<% include partials/head %>
 </head>
 <body>
 	<% include partials/header %>
-
+	<h1>/<%=path%></h1>
 	<div class="row">
 		<div class="small-6 columns">
 			<div class="row">
-				<form action="<%=route%>/new">
+				<form action="/boards/<%=path%>/new" method="GET">
 					<button>New Topic</button>
 				</form>
 			</div>
@@ -33,10 +33,16 @@
 			<div class="row">
 				<div class="small-1 columns"><%=topic.votes%></div>
 				<div class="small-8 columns">
-					<a href="<%=route%>/<%=topic.id%>/<%=topic.topic%>"><%=topic.topic%></a>
+					<div class="row">
+						
+					<a href="/boards/<%=path%>/<%=topic.id%>/<%=topic.topic%>"><%=topic.topic%></a>
+					</div>
+					<div class="row">
+						<p>Created by <%=topic.alias%></p>
+					</div>
 				</div>
 				<div class="small-2 columns"><%=topic.updated%></div>
-				<div class="small-1 column">DUNNO</div>
+				<div class="small-1 column">999999</div>
 			</div>
 				<% }) %>
 

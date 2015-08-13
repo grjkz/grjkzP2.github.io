@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>New Comment</title>
+	<% include partials/head %>
+</head>
+<body>
+	<% include partials/header %>
+	<%=topic_path%>
+	<div class="div row">
+		<h1>New Comment for /<%=topic_name%>/</h1>
+	</div>
+
+<form action="<%=topic_path%>" method='POST'>
+		<div class="row">
+			<div class="row">
+				<label for="detail-input">Comment:</label>
+			</div>
+			<div class="row">
+				<textarea name="comment" id="detail-input" cols="30" rows="10"></textarea>
+			</div>
+		</div>
+		<div class="row">
+			<div class="small-6 medium-9 columns">
+				
+			</div>
+			<div class="small-6 medium-3 columns end">
+				<button>Add Comment</button>
+			</div>
+		</div>
+	</form>
+
+
+	<% include partials/footer %>
+</body>
+</html>
+
+
+	# <% for (var i=0;i<5;i++) { %>
+	# 		<div class="small-12 columns">
+	# 			<div class="row">
+	# 				<div class="small-12 columns">
+	# 					<div class="row">
+	# 						<p><%=recents[i].topic%></p>	
+	# 					</div>
+						
+	# 				</div>
+	# 			</div>
+	# 			<% } %>

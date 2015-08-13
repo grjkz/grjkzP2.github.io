@@ -7,7 +7,10 @@
 </head>
 <body>
 	<% include partials/header %>
-
+	
+	<div class="div row">
+		<h1>New Topic for /<%=path%>/</h1>
+	</div>
 	<form action="/boards/<%=path%>" method="POST">
 		<div class="row">
 			<div class="row">
@@ -28,15 +31,23 @@
 		
 		<div class="row">
 			<div class="small-6 medium-9 columns">
-				<form action="/boards/<%=path%>" method='GET'>
-					<button type='button' action='/boards/<%=path%>'>Back</button>
-				</form>
+				
 			</div>
 			<div class="small-6 medium-3 columns end">
 				<button>Create Thread</button>
 			</div>
 		</div>
 	</form>
+	<div class="row">
+		<div class="small-10 columns">
+			
+		</div>
+		<div class="small-2 columns">
+			<form action="/boards/<%=path%>" method='GET'>
+				<button>Back</button>
+			</form>
+		</div>
+	</div>
 
 	<% include partials/footer %>
 </body>

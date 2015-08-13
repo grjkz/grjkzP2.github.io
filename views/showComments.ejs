@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Comments</title>
+	<% include partials/head %>
+</head>
+<body>
+	<% include partials/header %>
+
+	<div class="row">
+		<div class="small-12 columns">
+			<div class="row">
+				<div class="small-1 columns">
+					<div class="row upvote" onclick='upvote(<%=thread_id%>)'>
+						asdf
+					</div>
+					<div class="row downvote">
+						fdas
+					</div>
+				</div>
+				<div class="small-11 columns">
+					<div class="row">
+					<h1><b><%=comments[0].topic%></b></h1>
+						
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<h4><%=comments[0].detail%></h4>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="small-6 columns">
+			<form action="<%=route%>/new" method="GET">
+				<button>New Comment</button>
+			</form>
+		</div>
+		<div class="small-6 columns"></div>
+	</div>
+
+	<div class="row">
+		<div class="small-12 columns">
+			<div class="row">
+				<div class="small-1 columns">
+					<div class="row">
+						Avatar
+					</div>
+				</div>
+				<div class="small-9 columns">
+					<div class="row">
+						Comment	
+					</div>
+				</div>
+				<div class="small-2 columns">
+					<div class="row">
+						Posted
+					</div>
+				</div>
+			</div>
+			<% if (comments[0].comment) { %>
+				<% comments.forEach(function(comment) { %>
+			<div class="row">
+				<div class="small-1 columns">
+					avatar here
+				</div>
+				<div class="small-9 columns">
+					<div class="row">
+					 <p><%=comment.alias%> said:</p>
+					</div>
+					<div class="row">
+						<p><%=comment.comment%></p>
+					</div>
+				</div>
+				<div class="small-2 columns">
+					<div class="row">
+						<p><%=comment.updated%></p>
+					</div>
+				</div>
+			</div>
+				<% })} %>
+		</div>
+	</div>
+
+	<form action="<%=route%>" method='POST'>
+		<div class="row">
+			<div class="row">
+				<label for="detail-input">Comment:</label>
+			</div>
+			<div class="row">
+				<textarea name="comment" id="detail-input" cols="30" rows="10"></textarea>
+			</div>
+		</div>
+		<div class="row">
+			<div class="small-6 medium-9 columns">
+				
+			</div>
+			<div class="small-6 medium-3 columns end">
+				<button>Add Comment</button>
+			</div>
+		</div>
+	</form>
+
+	<% include partials/footer %>
+</body>
+</html>
