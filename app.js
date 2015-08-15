@@ -28,6 +28,7 @@ app.get('/',function(req,res) {
 			db.all('SELECT threads.topic,threads.votes,genres.folder_name,threads.id FROM genres INNER JOIN threads ON genres.id=threads.genre_id ORDER BY threads.votes DESC',function(error,popular) {
 			// db.all('SELECT * FROM threads ORDER BY votes DESC',function(error,popular) {
 				// res.send(popular)
+				// res.send(recents)
 				res.render('index.ejs',{recents:recents,popular:popular});
 			})
 		}
@@ -46,7 +47,7 @@ app.get('/boards',function(req,res) {
 		// 	else { res.send(result); }
 		// })
 
-	db.all('SELECT * FROM genres', function(err, results) {
+	db.all('SELECT genres.* FROM genres', function(err, results) {
 		res.render('showGenres.ejs',{genres:results});
 	});
 });
@@ -69,7 +70,7 @@ app.get('/boards/random',function(req,res) {
 app.get('/boards/:genre',function(req,res) {
 	// having threads after genres causes the id of threads to overwrite genres', which i need
 	// i also want the alias' to be returned with the associated information
-	console.log("path: "+req.params.genre);
+	// console.log("path: "+req.params.genre);
 	db.all('SELECT users.alias,threads.id,threads.votes,threads.topic,threads.updated,threads.created FROM genres INNER JOIN threads ON threads.genre_id=genres.id INNER JOIN users ON threads.creator_id=users.id WHERE genres.folder_name=?',req.params.genre, function(err, results) {
 		if (err) throw err;
 		else {
@@ -101,9 +102,8 @@ app.get('/boards/:genre/:thread_id/:topic_name',function(req,res) {
 		}
 		else {
 			if (results.length) {  // caution: results=undefined if there are no comments
-				// console.log(results); 
-				// db.all('SELECT * FROM posts WHERE thread_id=?',req.params.thread_id,function(err,results) {
 				// res.send(results);
+				// db.all('SELECT * FROM posts WHERE thread_id=?',req.params.thread_id,function(err,results) {
 				res.render('showComments.ejs',{comments:results,route:"/boards/"+req.params.genre+"/"+req.params.thread_id+"/"+req.params.topic_name,back_path:"/boards/"+req.params.genre});
 			}
 			else {  // if results=undefined for that topic, just grab topic's info
@@ -121,12 +121,19 @@ app.get('/boards/:genre/:thread_id/:topic_name',function(req,res) {
 app.post('/boards/:genre/:thread_id/:topic_name',function(req,res) {
 	// console.log(req.get('referer'));
 	// console.log(req.body.comment);
-	db.run("INSERT INTO posts (thread_id,user_id,comment) VALUES (?,?,?)", req.params.thread_id, 1, req.body.comment, function(err) {
-		if (err) throw err;
-		else {
-			res.redirect(req.url);
+	db.get('SELECT * FROM users WHERE users.alias=? AND users.pass=?',req.body.alias,req.body.pass,function(err,user) {
+		if (user) {
+			db.run("INSERT INTO posts (thread_id,user_id,comment) VALUES (?,?,?)", req.params.thread_id, user.id, req.body.comment, function(err) {
+				if (err) throw err;
+				else {
+					res.redirect(req.url);
+				}
+			});
 		}
-	});
+		else {
+			res.redirect(req.get('referer'));
+		}
+	})
 });
 
 
@@ -156,14 +163,22 @@ app.put('/boards/:genre/:thread_id/:topic_name/downvote',function(req,res) {
 // POSTing a new thread
 app.post('/boards/:genre',function(req,res) {
 	// console.log(res);
-	db.get('SELECT id FROM genres WHERE folder_name=?', req.params.genre, function(error, result) {
-		db.run('INSERT INTO threads (genre_id,creator_id,topic,detail) VALUES (?,?,?,?)',result.id, 1,req.body.topic,req.body.detail,function(err) {
-			if (err) throw err;
-			else {
-				res.redirect(req.url);
-			}
-		})
+	// check for matching username and get uers.id if found
+	db.get('SELECT * FROM users WHERE users.alias=? AND users.pass=?',req.body.alias,req.body.pass,function(err,user) {
+		if (user) {  //matching user
+			// find the id of genre folder and INSERT INTO
+			db.get('SELECT id FROM genres WHERE folder_name=?', req.params.genre, function(error, genre) {
+				db.run('INSERT INTO threads (genre_id,creator_id,topic,detail) VALUES (?,?,?,?)',genre.id, user.id,req.body.topic,req.body.detail,function(err) {
+					if (err) throw err;
+					else {
+						res.redirect(req.url);
+					}
+				});
+			});
+		}
+		else { res.redirect(req.get('referer')); }
 	})
+
 });
 
 
@@ -175,6 +190,8 @@ app.get('/signup',function(req,res) {
 
 // post new username
 app.post('/signup',function(req,res) {
+	// default avatar if user doesn't input a url
+	if (!req.body.avatar) req.body.avatar = 'http://40.media.tumblr.com/0a049264fba0072a818f733a6c533578/tumblr_mqvlz4t5FK1qcnibxo1_500.png';
 		db.run('INSERT INTO users (alias,pass,avatar) VALUES (?,?,?)',req.body.alias,req.body.pass,req.body.avatar,function(err) {
 			if (err) res.redirect('/signup');
 			else res.redirect('/boards');

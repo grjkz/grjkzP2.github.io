@@ -28,7 +28,8 @@
 					</div>
 
 					<div class="small-12 columns">
-						<% for (var i=0;i<5;i++) { %>
+						<% for (var i=0;i<5&&i<recents.length;i++) { %>
+						 
 						<div class="row comment">
 							<div class="small-11 small-centered columns">
 								<div class="row">
@@ -65,7 +66,7 @@
 				
 				<div class="row">
 					<div class="small-12 columns">
-						<% for(var i=0;i<5;i++) { %>
+						<% for(var i=0;i<5&&i<popular.length;i++) { %>
 							<div class="row comment">
 								<div class="small-1 column vote-container">
 										<p><%=popular[i].votes%></p>

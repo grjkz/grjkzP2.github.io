@@ -6,7 +6,7 @@ PRAGMA foreign_keys = ON;
 
 CREATE TABLE users (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	alias TEXT UNIQUE,
+	alias TEXT UNIQUE COLLATE NOCASE,
 	pass TEXT,
 	avatar TEXT,
 	user_since TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -47,24 +47,25 @@ CREATE TABLE posts (
 CREATE TRIGGER update_timestamp_threads UPDATE OF detail, topic ON threads
 	BEGIN
 		UPDATE threads SET updated = CURRENT_TIMESTAMP WHERE id=old.id;
-		UPDATE genres SET updated = CURRENT_TIMESTAMP WHERE id=old.id;
+		UPDATE genres SET updated = CURRENT_TIMESTAMP WHERE id=old.genre_id;
 	END;
 
 CREATE TRIGGER update_timestamp_posts UPDATE OF comment ON posts
 	BEGIN
 		UPDATE posts SET edited = CURRENT_TIMESTAMP WHERE id=old.id;
-		UPDATE threads SET updated = CURRENT_TIMESTAMP WHERE id=old.id;
--- not sure if these work from here on down
+		UPDATE threads SET updated = CURRENT_TIMESTAMP WHERE id=old.thread_id;
+-- don't know how to get the UPDATE genres to work since it has to travel 2 tiers up
 		UPDATE genres SET updated = CURRENT_TIMESTAMP WHERE id=old.id;
 	END;
 
-CREATE TRIGGER update_on_new_posts INSERT ON posts
+CREATE TRIGGER update_on_new_posts AFTER INSERT ON posts
 	BEGIN 
-		UPDATE threads SET updated = CURRENT_TIMESTAMP WHERE id=old.id;
-		UPDATE genres SET updated = CURRENT_TIMESTAMP WHERE id=old.id;
+		UPDATE threads SET updated = CURRENT_TIMESTAMP WHERE id=new.thread_id;
+-- don't know how to get the UPDATE genres to work since it has to travel 2 tiers up
+		UPDATE genres SET updated = CURRENT_TIMESTAMP WHERE id=new.id;
 	END;
 
-CREATE TRIGGER update_on_new_threads INSERT ON threads
+CREATE TRIGGER update_on_new_threads AFTER INSERT ON threads
 	BEGIN
-		UPDATE genres SET updated = CURRENT_TIMESTAMP WHERE id=old.id;
+		UPDATE genres SET updated = CURRENT_TIMESTAMP WHERE id=new.genre_id;
 	END;

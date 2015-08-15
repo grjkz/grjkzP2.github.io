@@ -9,7 +9,7 @@
 	<% include partials/header %>
 	
 	<div class="container">
-		<div class="row section">
+		<div class="row top">
 			<h1>New Comment for /<%=topic_name%>/</h1>
 		</div>
 
@@ -22,7 +22,17 @@
 					</div>
 
 					<div class="row">
-						<div class="small-9 columns">							
+						<div class="small-9 columns">	
+							<div class="row">
+								<div class="small-4 columns">
+									<label for="alias-input">Username</label>
+									<input type="text" name='alias' placeholder='Username' id='alias-input' required>
+								</div>
+								<div class="small-4 columns end">
+									<label for="pass-input">Password</label>
+									<input type="password" name='pass' placeholder='Password' id='pass-input' required>
+								</div>
+							</div>						
 						</div>
 						<div class="small-3 columns">
 							<button>Add Comment</button>
