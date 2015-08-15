@@ -7,44 +7,44 @@
 </head>
 <body>
 	<% include partials/header %>
-	<%=topic_path%>
-	<div class="div row">
-		<h1>New Comment for /<%=topic_name%>/</h1>
-	</div>
-
-<form action="<%=topic_path%>" method='POST'>
-		<div class="row">
-			<div class="row">
-				<label for="detail-input">Comment:</label>
-			</div>
-			<div class="row">
-				<textarea name="comment" id="detail-input" cols="30" rows="10"></textarea>
-			</div>
+	
+	<div class="container">
+		<div class="row section">
+			<h1>New Comment for /<%=topic_name%>/</h1>
 		</div>
+
+		<form action="<%=topic_path%>" method="POST">
+			<div class="row section">
+				<div class="small-12 columns">
+					<div class="row">
+						<label for="detail-input">Comment:</label>
+						<textarea name="comment" id="detail-input" cols="30" rows="10" required></textarea>
+					</div>
+
+					<div class="row">
+						<div class="small-9 columns">							
+						</div>
+						<div class="small-3 columns">
+							<button>Add Comment</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+
 		<div class="row">
-			<div class="small-6 medium-9 columns">
+			<div class="small-2 small-centered columns">
+				
+					<form action="<%=topic_path%>" method='GET'>
+						<button>Back</button>
+					</form>
 				
 			</div>
-			<div class="small-6 medium-3 columns end">
-				<button>Add Comment</button>
-			</div>
 		</div>
-	</form>
+	
+	</div>
 
-
-	<% include partials/footer %>
 </body>
+	<% include partials/footer %>
 </html>
 
-
-	# <% for (var i=0;i<5;i++) { %>
-	# 		<div class="small-12 columns">
-	# 			<div class="row">
-	# 				<div class="small-12 columns">
-	# 					<div class="row">
-	# 						<p><%=recents[i].topic%></p>	
-	# 					</div>
-						
-	# 				</div>
-	# 			</div>
-	# 			<% } %>

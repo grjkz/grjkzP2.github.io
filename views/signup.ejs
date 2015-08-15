@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Sign up</title>
+	<% include partials/head %>
+</head>
+<body>
+	<% include partials/header %>
+	
+	<div class="container">
+		<div class="row top">
+			<div class="small-12 columns">
+			<h1>New Member</h1>
+			</div>
+		</div>
+
+		<form action="/signup" method="POST">
+			<div class="row section">
+				<div class="small-12 columns">
+					<div class="row">
+						<div class="small-12 medium-4 small-centered columns">
+							<label for="name-input">Username:</label>
+							<input type="text" placeholder='Username' name='alias' id='name-input' required>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="small-12 medium-4 small-centered columns">
+							<label for="pass-input">Password:</label>
+							<input type="password" placeholder='Password' name='pass' id='pass-input' required>
+						</div>
+					</div>
+					<div class="row">
+						<div class="small-12 medium-4 small-centered columns">
+							<label for="avatar-input">Avatar Image:</label>
+							<input type="password" placeholder='url' name='avatar' id='avatar-input'>
+						</div>
+					</div>
+					<br><br>
+					<div class="row">
+						<b>Please note the following</b>
+						<ul>
+							<li>Usernames must be unique: If a username exists, the page will refresh and you should try again.</li>
+							<li>Usernames should be simple and easy to remember: Else you're probably never going to recover it.</li>
+							<li>You're going to need to enter your username and password each time you want to post something.</li>
+							<li>Fuck</li>
+						</ul>
+					</div>
+
+					<div class="row">
+						<div class="small-9 columns">
+							
+						</div>
+						<div class="small-3 columns">
+							<button>Sign Up</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+
+
+
+		<div class="row">
+			<div class="small-2 small-centered columns">
+				
+					<form action="/" method='GET'>
+						<button>Back</button>
+					</form>
+				
+			</div>
+		</div>
+	</div>
+	
+
+	<% include partials/footer %>
+</body>
+</html>

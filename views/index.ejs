@@ -9,48 +9,88 @@
 	<% include partials/header %>
 
 	<div class="container">
-	
-		<div class="row">
+
+		<div class="row top">
 			<div class="small-12 columns">
-				<h1>Welcome to Gamerz</h1>
+				<h1 class='site-name'>Game Con</h1>
 			</div>
 		</div>
-	
-
-		<div class="row"> <!-- container for recent posts -->
 			
-			<div class="small-12 columns">
-				<div class="row"> <!-- container for header -->
-					<h3>Recent Comments</h3>
-				</div>
 
-			</div>
+		<div class="row section">
 			<div class="small-12 columns">
-				<% for (var i=0;i<5;i++) { %>
+				<div class="row"> <!-- container for recent posts -->
+					
+					<div class="small-12 columns">
+						<div class="row topbar"> <!-- container for header -->
+							<h3>Recent Comments</h3>
+						</div>
+					</div>
+
+					<div class="small-12 columns">
+						<% for (var i=0;i<5;i++) { %>
+						<div class="row comment">
+							<div class="small-11 small-centered columns">
+								<div class="row">
+									<p><%=recents[i].comment%></p>	
+								</div>
+							</div>
+							<div class="small-11 small-offset-1 columns"> <!-- having consecutive columns creates tabbing -->
+								<div class="row subtext">
+									<p><b>/</b><%=recents[i].topic%><b>/</b></p>	
+								</div>
+							</div>
+						</div>
+						<% } %>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row section"> <!-- container for hot topics -->
+			<div class="small-12 columns">
+				<div class="row topbar">
+					<div class="small-1 column">
+						<div class="row">
+							<h3>Votes</h3>
+						</div>
+					</div>
+					<div class="small-11 columns">
+						<div class="row">
+							<h3>Popular Topics</h3>
+						</div>
+					</div>
+				</div>
+				
 				<div class="row">
 					<div class="small-12 columns">
-						<div class="row">
-							<p><%=recents[i].comment%></p>	
-						</div>
-					<div class="small-12 columns"> <!-- having consecutive columns creates tabbing -->
-						<div class="row">
-							<p>/<%=recents[i].topic%>/</p>	
-						</div>
-					</div>
+						<% for(var i=0;i<5;i++) { %>
+							<div class="row comment">
+								<div class="small-1 column vote-container">
+										<p><%=popular[i].votes%></p>
+								</div>
+								<div class="small-11 columns">
+									<div class="row">
+										<p><%=popular[i].topic%></p>
+									</div>
+									<div class="row subtext">
+										<row class="small-11 small-offset-1 columns">
+												<p><b>/</b><%=popular[i].folder_name%><b>/</b></p>
+											</row>
+									</div>
+								</div>	
+							</div>
+						<% } %>
 					</div>
 				</div>
-				<% } %>
 			</div>
-		
 		</div>
-		
-
-
 
 
 
 	</div>
 
-	<% include partials/footer %>
 </body>
+	<% include partials/footer %>
 </html>

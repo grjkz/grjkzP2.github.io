@@ -7,38 +7,42 @@
 </head>
 <body>
 	<% include partials/header %>
-	<h1>/<%=path%></h1>
+	<div class="row top">
+		<div class="small-12 columns">
+			<h1>/<%=path%></h1>
+		</div>
+	</div>
+
 	<div class="row">
 		<div class="small-6 columns">
 			<div class="row">
 				<form action="/boards/<%=path%>/new" method="GET">
-					<button>New Topic</button>
+					<button>Create Topic</button>
 				</form>
 			</div>
 		</div>
 		<div class="small-6 columns">
-			
 		</div>
 	</div>
-	<div class="row">
-		<div class="small-10 medium-9 columns">
-			<div class="row">
+
+	<div class="row section">
+		<div class="small-12 columns">
+			<div class="row topbar">
 				<div class="small-1 columns">Likes</div>
 				<div class="small-8 columns">Topic</div>
-				<div class="small-2 columns">Updated</div>
+				<div class="small-2 columns">Last Post</div>
 				<div class="small-1 column">Posts</div>
 			</div>
 				
 				<% topics.forEach(function(topic) { %>
-			<div class="row">
-				<div class="small-1 columns"><%=topic.votes%></div>
+			<div class="row comment">
+				<div class="small-1 columns vote-container"><p><%=topic.votes%></p></div>
 				<div class="small-8 columns">
 					<div class="row">
-						
 					<a href="/boards/<%=path%>/<%=topic.id%>/<%=topic.topic%>"><%=topic.topic%></a>
 					</div>
 					<div class="row">
-						<p>Created by <%=topic.alias%></p>
+						<p class='posted-by'>Created by <%=topic.alias%></p>
 					</div>
 				</div>
 				<div class="small-2 columns"><%=topic.updated%></div>
@@ -47,13 +51,13 @@
 				<% }) %>
 
 		</div>
-		<div class="small-2 medium-3 columns">
+		<!-- <div class="small-2 medium-3 columns">
 			<div class="row">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla asperiores sed debitis soluta voluptate deleniti, illo optio tempora quaerat possimus ipsam, earum ad vel blanditiis exercitationem facere accusantium et, consequuntur.
 			</div>
-		</div>
+		</div> -->
 	</div>
 
-	<% include partials/footer %>
 </body>
+	<% include partials/footer %>
 </html>

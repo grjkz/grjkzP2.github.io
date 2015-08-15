@@ -8,21 +8,34 @@
 <body>
 	<% include partials/header %>
 
-	<div class="row">
+<!-- TOPIC AREA-->
+	<div class="row section">
 		<div class="small-12 columns">
 			<div class="row">
-				<div class="small-1 columns">
-					<div class="row upvote" onclick='upvote(<%=thread_id%>)'>
-						asdf
+				<div class="small-1 columns vote-container">
+					<div class="row">
+						<div class="small-12 columns">
+							<form action="<%=route%>/upvote?_method=PUT" method="POST">
+								<input class='vote-image' type="image" src="/imgs/upvote.png" alt='submit'>
+							</form>
+						</div>
 					</div>
-					<div class="row downvote">
-						fdas
+					<div class="row">
+						<div class="small-12 columns">
+							<p><%=comments[0].votes%></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="small-12 columns">
+							<form action="<%=route%>/downvote?_method=PUT" method="POST">
+								<input class='vote-image' type="image" src="/imgs/downvote.png" alt='submit'>
+							</form>
+						</div>
 					</div>
 				</div>
-				<div class="small-11 columns">
+				<div class="small-11 columns vertical-align">
 					<div class="row">
-					<h1><b><%=comments[0].topic%></b></h1>
-						
+						<h1><b><%=comments[0].topic%></b></h1>
 					</div>
 				</div>
 			</div>
@@ -31,7 +44,8 @@
 			</div>
 		</div>
 	</div>
-
+	
+<!-- BUTTON TO NEW COMMENT PAGE -->
 	<div class="row">
 		<div class="small-6 columns">
 			<form action="<%=route%>/new" method="GET">
@@ -41,12 +55,13 @@
 		<div class="small-6 columns"></div>
 	</div>
 
-	<div class="row">
+<!-- comments start here -->
+	<div class="row section">
 		<div class="small-12 columns">
-			<div class="row">
+			<div class="row comment">
 				<div class="small-1 columns">
 					<div class="row">
-						Avatar
+						<div class="small-12 columns">Avatar</div>
 					</div>
 				</div>
 				<div class="small-9 columns">
@@ -60,15 +75,16 @@
 					</div>
 				</div>
 			</div>
+<!-- BEGIN LOOPING COMMENTS -->
 			<% if (comments[0].comment) { %>
 				<% comments.forEach(function(comment) { %>
-			<div class="row">
+			<div class="row comment">
 				<div class="small-1 columns">
 					avatar here
 				</div>
 				<div class="small-9 columns">
 					<div class="row">
-					 <p><%=comment.alias%> said:</p>
+					 <p class='posted-by'><%=comment.alias%> said:</p>
 					</div>
 					<div class="row">
 						<p><%=comment.comment%></p>
@@ -84,25 +100,38 @@
 		</div>
 	</div>
 
+<!-- new comment form -->
 	<form action="<%=route%>" method='POST'>
-		<div class="row">
+		<div class="row section">
+			<div class="small-12 columns">
 			<div class="row">
 				<label for="detail-input">Comment:</label>
 			</div>
 			<div class="row">
-				<textarea name="comment" id="detail-input" cols="30" rows="10"></textarea>
+				<textarea name="comment" id="detail-input" cols="30" rows="10" required></textarea>
 			</div>
 		</div>
 		<div class="row">
-			<div class="small-6 medium-9 columns">
+			<div class="small-9 columns">
 				
 			</div>
-			<div class="small-6 medium-3 columns end">
+			<div class="small-3 columns">
 				<button>Add Comment</button>
 			</div>
 		</div>
+		</div>
 	</form>
 
-	<% include partials/footer %>
+	<div class="row">
+			<div class="small-2 small-centered columns">
+				
+					<form action="<%=back_path%>" method='GET'>
+						<button>Back</button>
+					</form>
+				
+			</div>
+		</div>
+
 </body>
+	<% include partials/footer %>
 </html>

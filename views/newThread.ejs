@@ -8,46 +8,49 @@
 <body>
 	<% include partials/header %>
 	
-	<div class="div row">
-		<h1>New Topic for /<%=path%>/</h1>
-	</div>
-	<form action="/boards/<%=path%>" method="POST">
-		<div class="row">
-			<div class="row">
-				<label for="topic-input">Topic:</label>
-			</div>
-			<div class="row">
-				<input type="text" placeholder='Topic' name='topic' id='topic-input'>
-			</div>
+	<div class="container">
+		<div class="row section">
+			<h1>New Topic for /<%=path%>/</h1>
 		</div>
-		<div class="row">
-			<div class="row">
-				<label for="detail-input">Comment:</label>
+
+		<form action="/boards/<%=path%>" method="POST">
+			<div class="row section">
+				<div class="small-12 columns">
+					<div class="row">
+						<label for="topic-input">Topic:</label>
+						<input type="text" placeholder='Topic' name='topic' id='topic-input' required>
+					</div>
+
+					<div class="row">
+						<label for="detail-input">Comment:</label>
+						<textarea name="detail" id="detail-input" cols="30" rows="10"></textarea>
+					</div>
+
+					<div class="row">
+						<div class="small-9 columns">
+							
+						</div>
+						<div class="small-3 columns">
+							<button>Create Thread</button>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="row">
-				<textarea name="detail" id="detail-input" cols="30" rows="10"></textarea>
-			</div>
-		</div>
-		
+		</form>
+
+
+
 		<div class="row">
-			<div class="small-6 medium-9 columns">
+			<div class="small-2 small-centered columns">
+				
+					<form action="/boards/<%=path%>" method='GET'>
+						<button>Back</button>
+					</form>
 				
 			</div>
-			<div class="small-6 medium-3 columns end">
-				<button>Create Thread</button>
-			</div>
-		</div>
-	</form>
-	<div class="row">
-		<div class="small-10 columns">
-			
-		</div>
-		<div class="small-2 columns">
-			<form action="/boards/<%=path%>" method='GET'>
-				<button>Back</button>
-			</form>
 		</div>
 	</div>
+	
 
 	<% include partials/footer %>
 </body>
