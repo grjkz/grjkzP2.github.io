@@ -6,15 +6,15 @@
 	<% include partials/head %>
 </head>
 <body>
+	<div class="container">
 	<% include partials/header %>
 	
-	<div class="container">
 		<div class="row top">
 			<h1>New Topic for /<%=path%>/</h1>
 		</div>
 
 		<form action="/boards/<%=path%>" method="POST">
-			<div class="row section">
+			<div class="row section cell">
 				<div class="small-12 columns">
 					<div class="row">
 						<label for="topic-input">Topic:</label>
@@ -37,6 +37,14 @@
 									<label for="pass-input">Password</label>
 									<input type="password" name='pass' placeholder='Password' id='pass-input' required>
 								</div>
+
+								<div class="small-1 columns">
+									<input type="hidden" name='geolocation' id='geocoords' value=''>
+								</div>
+								<div class="small-3 columns">
+									<button type='button' id='geobutton' onclick='geolocate()'>GeoTag Me</button>
+								</div>
+								
 							</div>
 						</div>
 						<div class="small-3 columns	">
@@ -58,9 +66,9 @@
 				
 			</div>
 		</div>
-	</div>
 	
 
 	<% include partials/footer %>
+	</div>
 </body>
 </html>

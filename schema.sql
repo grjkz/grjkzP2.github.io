@@ -26,7 +26,8 @@ CREATE TABLE threads (
 	topic TEXT NOT NULL,
 	detail TEXT,
 	votes INTEGER DEFAULT 0,
-	posts INTEGER DEFAULT 0,  
+	posts INTEGER DEFAULT 0,
+	location TEXT,  
 	created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY(genre_id) REFERENCES genres(id),
@@ -38,6 +39,7 @@ CREATE TABLE posts (
 	thread_id INTEGER,
 	user_id INTEGER,
 	comment TEXT NOT NULL,
+	location TEXT,
 	posted TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	edited TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY(thread_id) REFERENCES threads(id),
@@ -61,6 +63,7 @@ CREATE TRIGGER update_timestamp_posts UPDATE OF comment ON posts
 CREATE TRIGGER update_on_new_posts AFTER INSERT ON posts
 	BEGIN 
 		UPDATE threads SET updated = CURRENT_TIMESTAMP WHERE id=new.thread_id;
+		UPDATE threads SET posts = posts+1 WHERE id = new.thread_id;
 -- don't know how to get the UPDATE genres to work since it has to travel 2 tiers up
 		UPDATE genres SET updated = CURRENT_TIMESTAMP WHERE id=new.id;
 	END;

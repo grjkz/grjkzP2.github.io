@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var urlencodedBodyParser = bodyParser.urlencoded({extended: false});
 var fs = require('fs');
+var request = require('request');
 app.use(express.static('views'));
 app.use(urlencodedBodyParser);
 app.use(methodOverride('_method'));
@@ -59,7 +60,7 @@ app.get('/boards/random',function(req,res) {
 		// shuffle the results
 		for (var i=0;i<results.length;i++) {
 			var temp = results.shift();
-			results.splice(Math.floor(Math.random()*results.length),0,temp);
+			results.splice(Math.floor(Math.random()*results.length+1),0,temp);
 		}
 		res.redirect('/boards/'+results[0].folder_name+'/'+results[0].id+'/'+results[0].topic)
 	});
@@ -71,7 +72,7 @@ app.get('/boards/:genre',function(req,res) {
 	// having threads after genres causes the id of threads to overwrite genres', which i need
 	// i also want the alias' to be returned with the associated information
 	// console.log("path: "+req.params.genre);
-	db.all('SELECT users.alias,threads.id,threads.votes,threads.topic,threads.updated,threads.created FROM genres INNER JOIN threads ON threads.genre_id=genres.id INNER JOIN users ON threads.creator_id=users.id WHERE genres.folder_name=?',req.params.genre, function(err, results) {
+	db.all('SELECT users.alias,threads.id,threads.votes,threads.posts,threads.topic,threads.updated,threads.created,threads.location FROM genres INNER JOIN threads ON threads.genre_id=genres.id INNER JOIN users ON threads.creator_id=users.id WHERE genres.folder_name=?',req.params.genre, function(err, results) {
 		if (err) throw err;
 		else {
 			// res.send(results);
@@ -94,7 +95,6 @@ app.get('/boards/:genre/:thread_id/:topic_name/new',function(req,res) {
 
 
 // show all comments in a specific thread
-// need to link this to the alias's somehow
 app.get('/boards/:genre/:thread_id/:topic_name',function(req,res) {
 	db.all('SELECT * FROM threads INNER JOIN posts ON threads.id=posts.thread_id INNER JOIN users ON users.id=posts.user_id WHERE posts.thread_id=?', req.params.thread_id, function(err, results) {
 		if (err) {
@@ -118,22 +118,37 @@ app.get('/boards/:genre/:thread_id/:topic_name',function(req,res) {
 
 
 // posting a comment will 'refresh' the page after saving to db
-app.post('/boards/:genre/:thread_id/:topic_name',function(req,res) {
-	// console.log(req.get('referer'));
-	// console.log(req.body.comment);
+app.post('/boards/:genre/:thread_id/:topic_name',function(req,res) {	
 	db.get('SELECT * FROM users WHERE users.alias=? AND users.pass=?',req.body.alias,req.body.pass,function(err,user) {
 		if (user) {
-			db.run("INSERT INTO posts (thread_id,user_id,comment) VALUES (?,?,?)", req.params.thread_id, user.id, req.body.comment, function(err) {
-				if (err) throw err;
-				else {
-					res.redirect(req.url);
-				}
-			});
+			// geotag requested
+			if (req.body.geolocation) {
+				request('http://maps.googleapis.com/maps/api/geocode/json?latlng='+req.body.geolocation,function(error,location) {
+					// res.send(JSON.parse(location.body).results[1].formatted_address)
+					var geoTag = JSON.parse(location.body).results[1].formatted_address;
+
+					db.run("INSERT INTO posts (thread_id,user_id,comment,location) VALUES (?,?,?,?)", req.params.thread_id, user.id, req.body.comment,geoTag, function(err) {
+						if (err) throw err;
+						else {
+							res.redirect(req.url);
+						}
+					});
+				});
+			}
+			// geotag wasnt submitted
+			else {
+				db.run("INSERT INTO posts (thread_id,user_id,comment,location) VALUES (?,?,?)", req.params.thread_id, user.id, req.body.comment, function(err) {
+					if (err) throw err;
+					else {
+						res.redirect(req.url);
+					}
+				});
+			}
 		}
 		else {
 			res.redirect(req.get('referer'));
 		}
-	})
+	});
 });
 
 
@@ -162,23 +177,39 @@ app.put('/boards/:genre/:thread_id/:topic_name/downvote',function(req,res) {
 
 // POSTing a new thread
 app.post('/boards/:genre',function(req,res) {
-	// console.log(res);
 	// check for matching username and get uers.id if found
 	db.get('SELECT * FROM users WHERE users.alias=? AND users.pass=?',req.body.alias,req.body.pass,function(err,user) {
-		if (user) {  //matching user
-			// find the id of genre folder and INSERT INTO
+		if (user) {  //matching user found
+			// find the id of genre folder for INSERT INTO
 			db.get('SELECT id FROM genres WHERE folder_name=?', req.params.genre, function(error, genre) {
-				db.run('INSERT INTO threads (genre_id,creator_id,topic,detail) VALUES (?,?,?,?)',genre.id, user.id,req.body.topic,req.body.detail,function(err) {
-					if (err) throw err;
-					else {
-						res.redirect(req.url);
-					}
-				});
+
+				// get location
+				if (req.body.geolocation) {
+					request('http://maps.googleapis.com/maps/api/geocode/json?latlng='+req.body.geolocation,function(error,location) {
+						// res.send(JSON.parse(location.body).results[1].formatted_address)
+						var geoTag = JSON.parse(location.body).results[1].formatted_address;
+						
+						db.run('INSERT INTO threads (genre_id,creator_id,topic,detail,location) VALUES (?,?,?,?,?)',genre.id, user.id,req.body.topic,req.body.detail,geoTag,function(err) {
+							if (err) throw err;
+							else {
+								res.redirect(req.url);
+							}
+						});
+					})
+				}
+				// geoTag wasn't submitted
+				else {
+					db.run('INSERT INTO threads (genre_id,creator_id,topic,detail) VALUES (?,?,?,?)',genre.id, user.id,req.body.topic,req.body.detail,function(err) {
+						if (err) throw err;
+						else {
+							res.redirect(req.url);
+						}
+					});
+				}
 			});
 		}
 		else { res.redirect(req.get('referer')); }
 	})
-
 });
 
 
@@ -192,8 +223,15 @@ app.get('/signup',function(req,res) {
 app.post('/signup',function(req,res) {
 	// default avatar if user doesn't input a url
 	if (!req.body.avatar) req.body.avatar = 'http://40.media.tumblr.com/0a049264fba0072a818f733a6c533578/tumblr_mqvlz4t5FK1qcnibxo1_500.png';
-		db.run('INSERT INTO users (alias,pass,avatar) VALUES (?,?,?)',req.body.alias,req.body.pass,req.body.avatar,function(err) {
-			if (err) res.redirect('/signup');
-			else res.redirect('/boards');
-		})
+	db.run('INSERT INTO users (alias,pass,avatar) VALUES (?,?,?)',req.body.alias,req.body.pass,req.body.avatar,function(err) {
+		if (err) res.redirect('/signup');
+		else res.redirect('/boards');
+	})
 })
+
+
+
+// var geokey = function() {
+// 	return JSON.parse(fs.readFileSync('geoapi.json','utf8'));
+// }
+// http://maps.googleapis.com/maps/api/geocode/json?latlng=44.4647452,7.3553838

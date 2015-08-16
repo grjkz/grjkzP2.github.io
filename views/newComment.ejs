@@ -6,15 +6,15 @@
 	<% include partials/head %>
 </head>
 <body>
+	<div class="container">
 	<% include partials/header %>
 	
-	<div class="container">
 		<div class="row top">
 			<h1>New Comment for /<%=topic_name%>/</h1>
 		</div>
 
-		<form action="<%=topic_path%>" method="POST">
-			<div class="row section">
+		<form id='comment-form' action="<%=topic_path%>" method="POST">
+			<div class="row section cell">
 				<div class="small-12 columns">
 					<div class="row">
 						<label for="detail-input">Comment:</label>
@@ -28,9 +28,16 @@
 									<label for="alias-input">Username</label>
 									<input type="text" name='alias' placeholder='Username' id='alias-input' required>
 								</div>
-								<div class="small-4 columns end">
+								<div class="small-4 columns">
 									<label for="pass-input">Password</label>
 									<input type="password" name='pass' placeholder='Password' id='pass-input' required>
+								</div>
+								<div class="small-1 columns">
+									<input type="hidden" name='geolocation' id='geocoords' value=''>
+								</div>
+								<div class="small-3 columns">
+									
+									<button type='button' id='geobutton' onclick='geolocate()'>GeoTag Me</button>
 								</div>
 							</div>						
 						</div>
@@ -44,17 +51,14 @@
 
 		<div class="row">
 			<div class="small-2 small-centered columns">
-				
 					<form action="<%=topic_path%>" method='GET'>
 						<button>Back</button>
 					</form>
-				
 			</div>
 		</div>
 	
-	</div>
-
-</body>
 	<% include partials/footer %>
+	</div>
+</body>
 </html>
 

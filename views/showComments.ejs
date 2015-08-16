@@ -6,10 +6,11 @@
 	<% include partials/head %>
 </head>
 <body>
+	<div class="container">
 	<% include partials/header %>
 
 <!-- TOPIC AREA-->
-	<div class="row section">
+	<div class="row section cell">
 		<div class="small-12 columns">
 			<div class="row">
 				<div class="small-1 columns vote-container">
@@ -84,7 +85,11 @@
 				</div>
 				<div class="small-9 columns">
 					<div class="row">
-					 <p class='posted-by'><%=comment.alias%> said:</p>
+					 <p class='posted-by'><%=comment.alias%> 
+						<% if (comment.location) { %> <!-- if geoTag exists -->
+					 	from <%=comment.location%> 
+						<% } %>
+					 	said:</p>
 					</div>
 					<div class="row">
 						<p><%=comment.comment%></p>
@@ -102,7 +107,7 @@
 
 <!-- new comment form -->
 	<form action="<%=route%>" method='POST'>
-		<div class="row section">
+		<div class="row section cell">
 			<div class="small-12 columns">
 			<div class="row">
 				<label for="detail-input">Comment:</label>
@@ -122,6 +127,14 @@
 						<label for="pass-input">Password</label>
 						<input type="password" name='pass' placeholder='Password' id='pass-input' required>
 					</div>
+
+					<div class="small-1 columns">
+						<input type="hidden" name='geolocation' id='geocoords' value=''>
+					</div>
+					<div class="small-3 columns">
+						<button type='button' id='geobutton' onclick='geolocate()'>GeoTag Me</button>
+					</div>
+					
 				</div>
 			</div>
 			<div class="small-3 columns">
@@ -140,7 +153,7 @@
 				
 			</div>
 		</div>
-
-</body>
 	<% include partials/footer %>
+</div>
+</body>
 </html>

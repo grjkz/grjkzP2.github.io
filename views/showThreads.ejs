@@ -6,6 +6,7 @@
 	<% include partials/head %>
 </head>
 <body>
+	<div class="container">
 	<% include partials/header %>
 	<div class="row top">
 		<div class="small-12 columns">
@@ -42,7 +43,11 @@
 					<a href="/boards/<%=path%>/<%=topic.id%>/<%=topic.topic%>"><%=topic.topic%></a>
 					</div>
 					<div class="row">
-						<p class='posted-by'>Created by <%=topic.alias%></p>
+						<p class='posted-by'>Created by <%=topic.alias%>
+						<% if (topic.location) { %> <!-- if geoTag exists -->
+					 	from <%=topic.location%> 
+						<% } %>
+						</p>
 					</div>
 				</div>
 				<div class="small-2 columns"><%=topic.updated%></div>
@@ -57,7 +62,7 @@
 			</div>
 		</div> -->
 	</div>
-
-</body>
 	<% include partials/footer %>
+</div>
+</body>
 </html>
