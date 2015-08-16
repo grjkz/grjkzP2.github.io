@@ -21,10 +21,10 @@ app.listen(3000, function() {
 // landing page
 app.get('/',function(req,res) {
 	// get list of posts and order by most recent
-	db.all('SELECT threads.topic,posts.comment FROM threads INNER JOIN posts ON threads.id=posts.thread_id ORDER BY posts.edited DESC',function(err,recents) {
+	db.all('SELECT threads.topic,posts.comment,genres.folder_name,threads.id FROM threads INNER JOIN posts ON threads.id=posts.thread_id INNER JOIN genres ON genres.id=threads.genre_id ORDER BY posts.edited DESC',function(err,recents) {
 		if (err) throw err;
 		else {
-			// console.log(recents);
+			// res.send(recents);
 			// get list of topics ordered by votes
 			db.all('SELECT threads.topic,threads.votes,genres.folder_name,threads.id FROM genres INNER JOIN threads ON genres.id=threads.genre_id ORDER BY threads.votes DESC',function(error,popular) {
 			// db.all('SELECT * FROM threads ORDER BY votes DESC',function(error,popular) {

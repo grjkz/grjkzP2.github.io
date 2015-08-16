@@ -127,3 +127,7 @@ article, .map {
 	text-align: center;
 	margin: 0 auto;
 }
+
+.top-posts-link {
+	color: navy;
+}

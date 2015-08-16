@@ -12,7 +12,7 @@
 
 		<div class="row top">
 			<div class="small-12 columns">
-				<h1 class='site-name'>Game Con</h1>
+				<h1 class='site-name'>The Basement</h1>
 			</div>
 		</div>
 			
@@ -33,7 +33,7 @@
 						<div class="row comment">
 							<div class="small-11 small-centered columns">
 								<div class="row">
-									<p><%=recents[i].comment%></p>	
+									<a class='top-posts-link' href="/boards/<%=recents[i].folder_name%>/<%=recents[i].id%>/<%=recents[i].topic%>"><%=recents[i].comment%></a>
 								</div>
 							</div>
 							<div class="small-11 small-offset-1 columns"> <!-- having consecutive columns creates tabbing -->
@@ -73,7 +73,7 @@
 								</div>
 								<div class="small-11 columns">
 									<div class="row">
-										<p><%=popular[i].topic%></p>
+										<a class='top-posts-link' href="/boards/<%=popular[i].folder_name%>/<%=popular[i].id%>/<%=popular[i].topic%>"><%=popular[i].topic%></a>
 									</div>
 									<div class="row subtext">
 										<row class="small-11 small-offset-1 columns">
