@@ -59,7 +59,7 @@
 <!-- comments start here -->
 	<div class="row section">
 		<div class="small-12 columns">
-			<div class="row comment">
+			<!-- <div class="row comment">
 				<div class="small-1 columns">
 					<div class="row">
 						<div class="small-12 columns">Avatar</div>
@@ -75,7 +75,7 @@
 						Posted
 					</div>
 				</div>
-			</div>
+			</div> -->
 <!-- BEGIN LOOPING COMMENTS -->
 			<% if (comments[0].comment) { %>
 				<% comments.forEach(function(comment) { %>
@@ -97,7 +97,7 @@
 				</div>
 				<div class="small-2 columns">
 					<div class="row">
-						<p><%=comment.updated%></p>
+						<p><%=comment.edited%></p>
 					</div>
 				</div>
 			</div>
@@ -134,7 +134,7 @@
 					<div class="small-3 columns">
 						<button type='button' id='geobutton' onclick='geolocate()'>GeoTag Me</button>
 					</div>
-					
+
 				</div>
 			</div>
 			<div class="small-3 columns">

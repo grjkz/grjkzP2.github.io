@@ -31,8 +31,8 @@
 			<div class="row topbar">
 				<div class="small-1 columns">Likes</div>
 				<div class="small-8 columns">Topic</div>
-				<div class="small-2 columns">Last Post</div>
-				<div class="small-1 column">Posts</div>
+				<div class="small-1 columns">Update</div>
+				<div class="small-2 column">Comments</div>
 			</div>
 				
 				<% topics.forEach(function(topic) { %>
@@ -51,7 +51,7 @@
 					</div>
 				</div>
 				<div class="small-2 columns"><%=topic.updated%></div>
-				<div class="small-1 column">999999</div>
+				<div class="small-1 column"><%=topic.posts%></div>
 			</div>
 				<% }) %>
 

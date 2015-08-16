@@ -17,26 +17,26 @@
 		<div class="row section">
 			<div class="small-12 columns">
 				<div class="row topbar">
-					<div class="small-1 column">Likes</div>
-					<div class="small-8 columns">Topic</div>
+					<!-- <div class="small-1 column"></div> -->
+					<div class="small-10 columns">Topic</div>
 					<div class="small-2 columns">Last Activity</div>
-					<div class="small-1 column">Posts</div>
+					<!-- <div class="small-1 column">Posts</div> -->
 				</div>
 					
 					<% genres.forEach(function(genre) { %>
 					
 				<div class="row comment">
-					<div class="small-1 columns"><%=genre.id%></div>
-					<div class="small-8 columns">
+					<!-- <div class="small-1 columns"> </div> -->
+					<div class="small-9 small-offset-1 columns">
 						<div class="row">
 						<a href="/boards/<%=genre.folder_name%>"><%=genre.folder_name%></a>
 						</div>
 						<div class="row description">
-							control the actions of a main character (or party members) immersed in some well-defined world
+							<%=genre.description%>
 						</div>
 					</div>
-					<div class="small-2 columns"></div>
-					<div class="small-1 column">99999</div>
+					<div class="small-2 columns"><%=genre.updated%></div>
+					<!-- <div class="small-1 column"></div> -->
 				</div>
 					<% }) %>
 

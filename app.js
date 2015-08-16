@@ -116,7 +116,7 @@ app.get('/boards/:genre/:thread_id/:topic_name',function(req,res) {
 	});
 });
 
-
+// ########################## NEW COMMENT ###########################
 // posting a comment will 'refresh' the page after saving to db
 app.post('/boards/:genre/:thread_id/:topic_name',function(req,res) {	
 	db.get('SELECT * FROM users WHERE users.alias=? AND users.pass=?',req.body.alias,req.body.pass,function(err,user) {
@@ -137,7 +137,7 @@ app.post('/boards/:genre/:thread_id/:topic_name',function(req,res) {
 			}
 			// geotag wasnt submitted
 			else {
-				db.run("INSERT INTO posts (thread_id,user_id,comment,location) VALUES (?,?,?)", req.params.thread_id, user.id, req.body.comment, function(err) {
+				db.run("INSERT INTO posts (thread_id,user_id,comment) VALUES (?,?,?)", req.params.thread_id, user.id, req.body.comment, function(err) {
 					if (err) throw err;
 					else {
 						res.redirect(req.url);
@@ -174,7 +174,7 @@ app.put('/boards/:genre/:thread_id/:topic_name/downvote',function(req,res) {
   });
 });
 
-
+// ############################ NEW THREAD ##############################
 // POSTing a new thread
 app.post('/boards/:genre',function(req,res) {
 	// check for matching username and get uers.id if found
