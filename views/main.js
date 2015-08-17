@@ -18,3 +18,18 @@ function geolocate() {
 }
 
 // dont know how to send the lat-lon information back to the server to processing
+
+if (document.cookie) {
+	$('.signup-link').hide();
+	$('.signin-link').hide();
+	$('.logout-link').show();
+	$('.alias').text(Cookies.get('name'));
+	$('.alias').show();
+}
+else {
+	$('.signup-link').show();
+	$('.signin-link').show();
+	$('.logout-link').hide();
+	$('.alias').text('');
+	$('.alias').hide();
+}

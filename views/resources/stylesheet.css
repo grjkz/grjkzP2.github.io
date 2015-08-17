@@ -15,6 +15,17 @@ nav li {
 	display:inline;
 	margin: 20px 30px;
 }
+.user-access {
+	position:absolute;
+	top:0;
+	right:0;
+	font-size: .8em;
+}
+
+/*i wanna display:none but it will cuase the boxes to move away from where i want them to go*/
+/*.signin-link,.signup-link,.logout-link {
+	display:none;
+}*/
 
 body {
 	background: url('/imgs/Final_Fantasy_7.jpg');	
@@ -82,7 +93,6 @@ p {
 	font-family: 'Titillium Web', sans-serif;
 }
 
-
 .posted-by {
 	color:gray;
 	font-size:.8em;
@@ -121,11 +131,6 @@ h3 {
 
 .subtext p {
 	color:blue;
-}
-
-article, .map {
-	text-align: center;
-	margin: 0 auto;
 }
 
 .top-posts-link {

@@ -8,6 +8,8 @@ var methodOverride = require('method-override');
 var urlencodedBodyParser = bodyParser.urlencoded({extended: false});
 var fs = require('fs');
 var request = require('request');
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
 app.use(express.static('views'));
 app.use(urlencodedBodyParser);
 app.use(methodOverride('_method'));
@@ -119,7 +121,7 @@ app.get('/boards/:genre/:thread_id/:topic_name',function(req,res) {
 // ########################## NEW COMMENT ###########################
 // posting a comment will 'refresh' the page after saving to db
 app.post('/boards/:genre/:thread_id/:topic_name',function(req,res) {	
-	db.get('SELECT * FROM users WHERE users.alias=? AND users.pass=?',req.body.alias,req.body.pass,function(err,user) {
+	db.get('SELECT * FROM users WHERE users.alias=? AND users.id=?',req.cookies.name,req.cookies.credentials,function(err,user) {
 		if (user) {
 			// geotag requested
 			if (req.body.geolocation) {
@@ -178,7 +180,7 @@ app.put('/boards/:genre/:thread_id/:topic_name/downvote',function(req,res) {
 // POSTing a new thread
 app.post('/boards/:genre',function(req,res) {
 	// check for matching username and get uers.id if found
-	db.get('SELECT * FROM users WHERE users.alias=? AND users.pass=?',req.body.alias,req.body.pass,function(err,user) {
+	db.get('SELECT * FROM users WHERE users.alias=? AND users.id=?',req.cookies.name,req.cookies.credentials,function(err,user) {
 		if (user) {  //matching user found
 			// find the id of genre folder for INSERT INTO
 			db.get('SELECT id FROM genres WHERE folder_name=?', req.params.genre, function(error, genre) {
@@ -215,7 +217,9 @@ app.post('/boards/:genre',function(req,res) {
 
 // form to register a new user
 app.get('/signup',function(req,res) {
+	// res.cookie('credentials',1,{maxAge:24*60*60*1000})
 	res.render('signup.ejs');
+	// console.log("Cookie: "+req.cookies);
 });
 
 
@@ -223,12 +227,42 @@ app.get('/signup',function(req,res) {
 app.post('/signup',function(req,res) {
 	// default avatar if user doesn't input a url
 	if (!req.body.avatar) req.body.avatar = 'http://40.media.tumblr.com/0a049264fba0072a818f733a6c533578/tumblr_mqvlz4t5FK1qcnibxo1_500.png';
+	// save new user
 	db.run('INSERT INTO users (alias,pass,avatar) VALUES (?,?,?)',req.body.alias,req.body.pass,req.body.avatar,function(err) {
 		if (err) res.redirect('/signup');
-		else res.redirect('/boards');
+		else {
+			res.redirect('/signin');
+		}
 	})
 })
 
+app.get('/signin',function(req,res) {
+	// res.send(req.cookies.name)
+	res.render('signin.ejs');
+});
+
+app.post('/signin',function(req,res) {
+	db.get('SELECT * FROM users WHERE users.alias=? AND users.pass=?',req.body.alias,req.body.pass,function(err,user) { 
+		if (user) {
+			res.cookie('credentials',user.id);
+			res.cookie('name',user.alias);
+			res.redirect('/');
+		}
+		else {
+			res.redirect(req.get('referer'));
+		}
+	});
+});
+
+app.get('/logout',function(req,res) {
+	res.clearCookie('credentials');
+	res.clearCookie('name');
+	res.redirect('/');
+});
+
+app.get('/faq',function(req,res) {
+	
+});
 
 
 // var geokey = function() {

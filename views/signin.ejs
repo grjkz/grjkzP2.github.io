@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Sign up</title>
+	<% include partials/head %>
+</head>
+<body>
+	<div class="container">
+	<% include partials/header %>
+	
+		<div class="row top">
+			<div class="small-12 columns">
+			<h1>Sign In</h1>
+			</div>
+		</div>
+
+		<form action="/signin" method="POST">
+			<div class="row section cell">
+				<div class="small-12 columns">
+					<div class="row">
+						<div class="small-12 medium-4 small-centered columns">
+							<label for="name-input">Username:</label>
+							<input type="text" placeholder='Username' name='alias' id='name-input' required>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="small-12 medium-4 small-centered columns">
+							<label for="pass-input">Password:</label>
+							<input type="password" placeholder='Password' name='pass' id='pass-input' required>
+						</div>
+					</div>
+					<div class="row">
+						<div class="small-12 medium-4 small-centered columns">
+<!-- 							<label for="avatar-input">Avatar Image:</label>
+							<input type="text" placeholder='url' name='avatar' id='avatar-input'> -->
+						</div>
+					</div>
+					<br><br>
+					<div class="row">
+						<!-- <b>Please note the following</b> -->
+						<ul>
+							<li>God</li>
+							<li>damn</li>
+							<li>cookies</li>
+							<li>are delicious</li>
+						</ul>
+					</div>
+
+					<div class="row">
+						<div class="small-9 columns">
+							
+						</div>
+						<div class="small-3 columns">
+							<button>Sign In</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+
+
+
+		<div class="row">
+			<div class="small-2 small-centered columns">
+					<form action="/" method='GET'>
+						<button>Back</button>
+					</form>
+			</div>
+		</div>
+	<div class='map'>
+<article></article>
+</div>
+	<% include partials/footer %>
+	</div>
+</body>
+</html>
