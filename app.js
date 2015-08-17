@@ -261,7 +261,7 @@ app.get('/logout',function(req,res) {
 });
 
 app.get('/faq',function(req,res) {
-
+	res.render('faq.ejs');
 });
 
 
