@@ -264,6 +264,10 @@ app.get('/faq',function(req,res) {
 	res.render('faq.ejs');
 });
 
+app.get('/*',function(req,res) {
+	res.redirect('/');
+});
+
 
 // var geokey = function() {
 // 	return JSON.parse(fs.readFileSync('geoapi.json','utf8'));
