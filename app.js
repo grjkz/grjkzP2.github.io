@@ -14,9 +14,11 @@ app.use(express.static('views'));
 app.use(urlencodedBodyParser);
 app.use(methodOverride('_method'));
 app.set('view_engine', 'ejs');
+app.set('port', process.env.PORT || 3000)
 
-app.listen(3000, function() {
-	console.log('listening on 3k...');
+
+app.listen(app.get('port'), function() {
+	console.log('listening on ' + app.get('port'));
 });
 
 
