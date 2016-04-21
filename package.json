@@ -4,7 +4,8 @@
   "description": "### User Stories This app will take a user input and post it into a db for others to read. A forum.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
